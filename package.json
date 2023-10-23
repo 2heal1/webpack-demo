@@ -1,0 +1,16 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test-special-tilde": "node special-tilde.js",
+    "test-special-x-range": "node special-x-range.js"
+  },
+  "dependencies": {
+    "semver": "^7.5.4"
+  },
+  "devDependencies": {
+    "webpack": "5.56.0"
+  }
+}
