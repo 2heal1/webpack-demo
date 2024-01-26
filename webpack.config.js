@@ -1,6 +1,28 @@
 const path = require("path");
-const { ModuleFederationPlugin } = require("@module-federation/enhanced");
+const { ModuleFederationPlugin,AsyncBoundaryPlugin } = require("@module-federation/enhanced");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
+
+const mfOptions = {
+  name: "xxx",
+  filename: "remoteEntry.js",
+  exposes: {
+    ".": "./src/index.js",
+  },
+  remotes:{
+    app1:'app1@http://localhost:3000/remoteEntry.js'
+  },
+  shared: {
+    react: {
+      eager: true,
+      singleton: true,
+    },
+    "react-dom": {
+      eager: true,
+      singleton: true,
+      requiredVersion: "~1",
+    },
+  },
+};
 module.exports = {
   entry: {
     main: ["./src/index"],
@@ -56,29 +78,8 @@ module.exports = {
     ],
   },
   plugins: [
-    new ModuleFederationPlugin({
-      name: "xxx",
-      filename: "remoteEntry.js",
-      exposes: {
-        ".": "./src/index.js",
-      },
-      shared: {
-        react: {
-          eager: true,
-          singleton: true,
-        },
-        "react-dom": {
-          eager: true,
-          singleton: true,
-          requiredVersion: "~1",
-        },
-        "shared-config": {
-          import: "./src/shared-config.js",
-          // default version is 0.0.0
-          version: "0.0.0",
-        },
-      },
-    }),
+    new ModuleFederationPlugin(mfOptions),
+    new AsyncBoundaryPlugin(mfOptions),
     new HTMLWebpackPlugin(),
   ],
 };

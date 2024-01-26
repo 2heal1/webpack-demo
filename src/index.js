@@ -1,6 +1,8 @@
 import DDD from 'react-dom'
 import react from 'react'
-import sharedConfig from 'shared-config'
+import remoteBtn from 'app1'
 
-console.log(43434,DDD,react)
-console.log(43434,sharedConfig)
+import('./dynamic-import');
+
+console.log('shared: ',DDD,react)
+console.log('remote: ',remoteBtn)
